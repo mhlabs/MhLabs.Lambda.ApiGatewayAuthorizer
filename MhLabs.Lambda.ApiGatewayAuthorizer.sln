@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{45C6FFF8-E38A-4452-9795-2970979A0F28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AF039A74-89C9-464C-84BF-B9637CA40945}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MhLabs.Lambda.ApiGatewayAuthorizer", "src\MhLabs.Lambda.ApiGatewayAuthorizer\MhLabs.Lambda.ApiGatewayAuthorizer.xproj", "{A298AFE2-8B3A-4155-A8D0-8C95E58651C8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A298AFE2-8B3A-4155-A8D0-8C95E58651C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A298AFE2-8B3A-4155-A8D0-8C95E58651C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A298AFE2-8B3A-4155-A8D0-8C95E58651C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A298AFE2-8B3A-4155-A8D0-8C95E58651C8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A298AFE2-8B3A-4155-A8D0-8C95E58651C8} = {45C6FFF8-E38A-4452-9795-2970979A0F28}
+	EndGlobalSection
+EndGlobal
