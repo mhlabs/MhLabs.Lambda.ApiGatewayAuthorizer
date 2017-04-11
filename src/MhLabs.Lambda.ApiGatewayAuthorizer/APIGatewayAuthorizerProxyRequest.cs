@@ -7,8 +7,13 @@ namespace MhLabs.Lambda.ApiGatewayAuthorizer
         public AuthorizerRequestContext RequestContext { get; set; }
         public class AuthorizerRequestContext
         {
-            public JObject Authorizer { get; set; }
+            public Authorizer Authorizer { get; set; }
         }
 
+        public class Authorizer
+        {
+            public JObject Claims { get; set; }
+        }
     }
+
 }

@@ -24,16 +24,18 @@ namespace MhLabs.Lambda.ApiGatewayAuthorizer
                 requestStream.Position = 0L;
             }
             var claimsRequest = this._serializer.Deserialize<APIGatewayAuthorizerProxyRequest>(requestStream);
-            requestStream.Position = 0;
+            requestStream.Position = 0L;
             var apiGatewayRequest = this._serializer.Deserialize<APIGatewayProxyRequest>(requestStream);
             lambdaContext.Logger.Log(string.Format("Incoming {0} requests to {1}", (object)apiGatewayRequest.HttpMethod, (object)apiGatewayRequest.Path));
             InvokeFeatures features = new InvokeFeatures();
             this.MarshallRequest(features, apiGatewayRequest);
             var context = CreateContext(features);
-            var claims = claimsRequest.RequestContext.Authorizer.ToObject<Dictionary<string, object>>();
-            var identity = new ClaimsIdentity(claims.Select(entry => new Claim(entry.Key, entry.Value.ToString())));
-            
-            context.HttpContext.User.AddIdentity(identity);
+            if (claimsRequest.RequestContext.Authorizer != null)
+            {
+                var claims = claimsRequest.RequestContext.Authorizer.Claims.ToObject<Dictionary<string, object>>();
+                var identity = new ClaimsIdentity(claims.Select(entry => new Claim(entry.Key, entry.Value.ToString())), "AuthorizerIdentity");
+                context.HttpContext.User.AddIdentity(identity);
+            }
             APIGatewayProxyResponse response = await ProcessRequest(lambdaContext, context, features, false);
             MemoryStream memoryStream = new MemoryStream();
             _serializer.Serialize(response, memoryStream);
@@ -43,6 +45,7 @@ namespace MhLabs.Lambda.ApiGatewayAuthorizer
                 lambdaContext.Logger.LogLine(new StreamReader(memoryStream).ReadToEnd());
                 memoryStream.Position = 0L;
             }
+
             return memoryStream;
         }        
     }
