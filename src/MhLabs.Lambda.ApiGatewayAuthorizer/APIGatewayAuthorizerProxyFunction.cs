@@ -14,8 +14,6 @@ namespace MhLabs.Lambda.ApiGatewayAuthorizer
     {
         private ILambdaSerializer _serializer = (ILambdaSerializer)new Amazon.Lambda.Serialization.Json.JsonSerializer();
 
-
-
         public override async Task<Stream> FunctionHandlerAsync(Stream requestStream, ILambdaContext lambdaContext)
         {
             if (EnableRequestLogging)
