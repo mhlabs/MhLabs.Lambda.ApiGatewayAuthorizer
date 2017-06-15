@@ -1,19 +1,20 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Amazon.Lambda.APIGatewayEvents;
+using Newtonsoft.Json.Linq;
 
 namespace MhLabs.Lambda.ApiGatewayAuthorizer
 {
-    public class APIGatewayAuthorizerProxyRequest
+    public class APIGatewayAuthorizerProxyRequest : APIGatewayProxyRequest
     {
-        public AuthorizerRequestContext RequestContext { get; set; }
-        public class AuthorizerRequestContext
-        {
-            public Authorizer Authorizer { get; set; }
-        }
-
-        public class Authorizer
-        {
-            public JObject Claims { get; set; }
-        }
+        public new AuthorizerRequestContext RequestContext { get; set; }
     }
 
+    public class AuthorizerRequestContext : APIGatewayProxyRequest.ProxyRequestContext
+    {
+        public new Authorizer Authorizer { get; set; }
+    }
+
+    public class Authorizer
+    {
+        public JObject Claims { get; set; }
+    }
 }

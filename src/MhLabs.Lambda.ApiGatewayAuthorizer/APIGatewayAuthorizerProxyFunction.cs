@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -12,39 +11,27 @@ namespace MhLabs.Lambda.ApiGatewayAuthorizer
 {
     public abstract class APIGatewayAuthorizerProxyFunction : APIGatewayProxyFunction
     {
-        private ILambdaSerializer _serializer = (ILambdaSerializer)new Amazon.Lambda.Serialization.Json.JsonSerializer();
-
-        public override async Task<Stream> FunctionHandlerAsync(Stream requestStream, ILambdaContext lambdaContext)
+        public async Task<APIGatewayProxyResponse> FunctionHandlerAsync(APIGatewayAuthorizerProxyRequest request, ILambdaContext lambdaContext)
         {
-            if (EnableRequestLogging)
+            lambdaContext.Logger.LogLine($"Incoming {request.HttpMethod} requests to {request.Path}");
+            var features = new InvokeFeatures();
+            MarshallRequest(features, request);
+            var context = this.CreateContext(features);
+
+            if (request.RequestContext.Authorizer != null)
             {
-                lambdaContext.Logger.LogLine(new StreamReader(requestStream).ReadToEnd());
-                requestStream.Position = 0L;
-            }
-            var claimsRequest = this._serializer.Deserialize<APIGatewayAuthorizerProxyRequest>(requestStream);
-            requestStream.Position = 0L;
-            var apiGatewayRequest = this._serializer.Deserialize<APIGatewayProxyRequest>(requestStream);
-            lambdaContext.Logger.Log(string.Format("Incoming {0} requests to {1}", (object)apiGatewayRequest.HttpMethod, (object)apiGatewayRequest.Path));
-            InvokeFeatures features = new InvokeFeatures();
-            this.MarshallRequest(features, apiGatewayRequest);
-            var context = CreateContext(features);
-            if (claimsRequest.RequestContext.Authorizer != null)
-            {
-                var claims = claimsRequest.RequestContext.Authorizer.Claims.ToObject<Dictionary<string, object>>();
+                var claims = request.RequestContext.Authorizer.Claims.ToObject<Dictionary<string, object>>();
                 var identity = new ClaimsIdentity(claims.Select(entry => new Claim(entry.Key, entry.Value.ToString())), "AuthorizerIdentity");
                 context.HttpContext.User = new ClaimsPrincipal(identity);
             }
-            APIGatewayProxyResponse response = await ProcessRequest(lambdaContext, context, features, false);
-            MemoryStream memoryStream = new MemoryStream();
-            _serializer.Serialize(response, memoryStream);
-            memoryStream.Position = 0L;
-            if (EnableResponseLogging)
-            {
-                lambdaContext.Logger.LogLine(new StreamReader(memoryStream).ReadToEnd());
-                memoryStream.Position = 0L;
-            }
 
-            return memoryStream;
-        }        
+            // Add along the Lambda objects to the HttpContext to give access to Lambda to them in the ASP.NET Core application
+            context.HttpContext.Items[LAMBDA_CONTEXT] = lambdaContext;
+            context.HttpContext.Items[APIGATEWAY_REQUEST] = request;
+
+            var response = await this.ProcessRequest(lambdaContext, context, features);
+
+            return response;
+        }
     }
 }

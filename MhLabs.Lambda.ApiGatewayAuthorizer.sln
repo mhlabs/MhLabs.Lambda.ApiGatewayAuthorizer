@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{45C6FFF8-E38A-4452-9795-2970979A0F28}"
 EndProject
@@ -10,7 +10,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MhLabs.Lambda.ApiGatewayAuthorizer", "src\MhLabs.Lambda.ApiGatewayAuthorizer\MhLabs.Lambda.ApiGatewayAuthorizer.xproj", "{A298AFE2-8B3A-4155-A8D0-8C95E58651C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MhLabs.Lambda.ApiGatewayAuthorizer", "src\MhLabs.Lambda.ApiGatewayAuthorizer\MhLabs.Lambda.ApiGatewayAuthorizer.csproj", "{A298AFE2-8B3A-4155-A8D0-8C95E58651C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{61A7FFD9-C06C-4755-988D-E3209E00762E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MhLabs.Lambda.ApiGatewayAuthorizer.Test", "test\MhLabs.Lambda.ApiGatewayAuthorizer.Test\MhLabs.Lambda.ApiGatewayAuthorizer.Test.csproj", "{3AF5B29B-C653-4CB2-857A-271EFDA941FF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestWebApp", "test\TestWebApp\TestWebApp.csproj", "{0F622F35-3D25-4190-AD3E-0B18E36E0FF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,11 +28,21 @@ Global
 		{A298AFE2-8B3A-4155-A8D0-8C95E58651C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A298AFE2-8B3A-4155-A8D0-8C95E58651C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A298AFE2-8B3A-4155-A8D0-8C95E58651C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AF5B29B-C653-4CB2-857A-271EFDA941FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AF5B29B-C653-4CB2-857A-271EFDA941FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AF5B29B-C653-4CB2-857A-271EFDA941FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AF5B29B-C653-4CB2-857A-271EFDA941FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F622F35-3D25-4190-AD3E-0B18E36E0FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F622F35-3D25-4190-AD3E-0B18E36E0FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F622F35-3D25-4190-AD3E-0B18E36E0FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F622F35-3D25-4190-AD3E-0B18E36E0FF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A298AFE2-8B3A-4155-A8D0-8C95E58651C8} = {45C6FFF8-E38A-4452-9795-2970979A0F28}
+		{3AF5B29B-C653-4CB2-857A-271EFDA941FF} = {61A7FFD9-C06C-4755-988D-E3209E00762E}
+		{0F622F35-3D25-4190-AD3E-0B18E36E0FF6} = {61A7FFD9-C06C-4755-988D-E3209E00762E}
 	EndGlobalSection
 EndGlobal
