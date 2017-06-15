@@ -32,7 +32,7 @@ namespace MhLabs.Lambda.ApiGatewayAuthorizer
             {
                 var claims = claimsRequest.RequestContext.Authorizer.Claims.ToObject<Dictionary<string, object>>();
                 var identity = new ClaimsIdentity(claims.Select(entry => new Claim(entry.Key, entry.Value.ToString())), "AuthorizerIdentity");
-                context.HttpContext.User.AddIdentity(identity);
+                context.HttpContext.User = new ClaimsPrincipal(identity);
             }
             APIGatewayProxyResponse response = await ProcessRequest(lambdaContext, context, features, false);
             MemoryStream memoryStream = new MemoryStream();
