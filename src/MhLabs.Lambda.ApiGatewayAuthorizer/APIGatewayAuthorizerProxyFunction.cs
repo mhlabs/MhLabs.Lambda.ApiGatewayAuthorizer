@@ -11,6 +11,7 @@ namespace MhLabs.Lambda.ApiGatewayAuthorizer
 {
     public abstract class APIGatewayAuthorizerProxyFunction : APIGatewayProxyFunction
     {
+        [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
         public async Task<APIGatewayProxyResponse> FunctionHandlerAsync(APIGatewayAuthorizerProxyRequest request, ILambdaContext lambdaContext)
         {
             lambdaContext.Logger.LogLine($"Incoming {request.HttpMethod} requests to {request.Path}");
