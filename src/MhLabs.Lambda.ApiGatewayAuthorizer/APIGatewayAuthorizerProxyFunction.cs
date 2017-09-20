@@ -46,9 +46,10 @@ namespace MhLabs.Lambda.ApiGatewayAuthorizer
             // Add along the Lambda objects to the HttpContext to give access to Lambda to them in the ASP.NET Core application
             context.HttpContext.Items[LAMBDA_CONTEXT] = lambdaContext;
             context.HttpContext.Items[APIGATEWAY_REQUEST] = request;
-
+            
             var response = await this.ProcessRequest(lambdaContext, context, features);
-
+            
+            response.IsBase64Encoded = Environment.GetEnvironmentVariable("IsBase64Encoded") != null && bool.Parse(Environment.GetEnvironmentVariable("IsBase64Encoded"));
             return response;
         }
     }
