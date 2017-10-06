@@ -53,7 +53,13 @@ namespace MhLabs.Lambda.ApiGatewayAuthorizer
             context.HttpContext.Items[APIGATEWAY_REQUEST] = request;
 
             var response = await this.ProcessRequest(lambdaContext, context, features);
-            var useGzip = Environment.GetEnvironmentVariable("UseGzip") != null && bool.Parse(Environment.GetEnvironmentVariable("UseGzip"));
+            string headerValue;
+            bool useGzip = false;
+            if (request.Headers.TryGetValue("accept-encoding", out headerValue))
+            {
+                useGzip = headerValue.Contains("gzip");
+            }
+            
             if (useGzip && context.HttpContext.Request.Method != HttpMethod.Options.Method)
             {
                 response.IsBase64Encoded = true;
