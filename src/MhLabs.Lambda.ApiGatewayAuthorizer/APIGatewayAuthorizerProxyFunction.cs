@@ -53,9 +53,8 @@ namespace MhLabs.Lambda.ApiGatewayAuthorizer
             context.HttpContext.Items[APIGATEWAY_REQUEST] = request;
 
             var response = await this.ProcessRequest(lambdaContext, context, features);
-            string headerValue;
-            bool useGzip = false;
-            if (request.Headers.TryGetValue("accept-encoding", out headerValue))
+            var useGzip = false;
+            if (request.Headers != null && request.Headers.TryGetValue("accept-encoding", out var headerValue))
             {
                 useGzip = headerValue.Contains("gzip");
             }
